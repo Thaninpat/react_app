@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    //console.log('CHECK SUCCESSFUL: Your token: ' + token);
     const decoded = jwt.verify(token, 'my_secret_key');
     req.userData = decoded;
     next();
@@ -14,3 +13,26 @@ module.exports = (req, res, next) => {
     });
   }
 }
+/*
+const jwt = require('express-jwt'),
+      secret = require('../configs').secret
+const getTokenFromHeader = req => {
+     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' || req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+       return req.headers.authorization.split(' ')[1]
+     }
+     return null
+}
+const auth = {
+  required: jwt({
+    secret: secret,
+    userProperty: 'payload',
+    getToken: getTokenFromHeader
+  }),
+  optional: jwt({
+    secret: secret,
+    userProperty: 'payload',
+    credentialsRequired: false,
+    getToken: getTokenFromHeader
+  })
+}
+module.exports = auth */

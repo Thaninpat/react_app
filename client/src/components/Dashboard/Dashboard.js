@@ -28,41 +28,41 @@ class Dashboard extends React.Component {
     }
   }
 
-  /*     componentDidMount() {
-        if (localStorage.getItem('userTokenTime')) {
-          axios.get('http://localhost:5000/api/videoList', {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-            }
-          }).then(res => {
-            this.setState({
-              videoList: res.data
-            });
-          });
+  componentDidMount() {
+    if (localStorage.getItem('userTokenTime')) {
+      axios.get('http://localhost:5000/api/videoList', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
         }
-      } */
+      }).then(res => {
+        this.setState({
+          videoList: res.data
+        });
+      });
+    }
+  }
 
   render() {
     if (this.state.redirect) return <Redirect to="/signIn" />
 
-    /*     const videos = this.state.videoList.map(video => {
-          return (
-            <div className="video col-xs-12 col-sm-12 col-md-3 col-lg-4" key={video._id}>
-              <Link to={'/video/' + video.upload_title}>
-                <div className="video-thumbnail">
-                  <img src={video.thumbnail_path} alt="video thubmnail" />
-                </div>
-              </Link>
-              <span className="username">
-                <Link to={'/api/videos/' + video.upload_title}>
-                  {video.uploader_name}
-                </Link>
-              </span>
-              <span className="video-title">{video.upload_title.replace(/_/g, ' ')}</span>
+    const videos = this.state.videoList.map(video => {
+      return (
+        <div className="video col-xs-12 col-sm-12 col-md-3 col-lg-4" key={video._id}>
+          <Link to={'/video/' + video.upload_title}>
+            <div className="video-thumbnail">
+              <img src={video.thumbnail_path} alt="video thubmnail" />
             </div>
-          );
-        }); */
+          </Link>
+          <span className="username">
+            <Link to={'/api/videos/' + video.upload_title}>
+              {video.uploader_name}
+            </Link>
+          </span>
+          <span className="video-title">{video.upload_title.replace(/_/g, ' ')}</span>
+        </div>
+      );
+    });
 
     return (
       <React.Fragment>
@@ -70,6 +70,10 @@ class Dashboard extends React.Component {
         <div className="container mt-5">
           <h4>Dashboard</h4>
           <hr className="my-4" />
+
+          <div className="streams row">
+            {videos}
+          </div>
         </div>
       </React.Fragment>
     );

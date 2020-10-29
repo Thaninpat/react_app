@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 import Form from '../form';
 import '../form.css';
 
-class SignUp extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +13,8 @@ class SignUp extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      redirect: localStorage.getItem('userTokenTime') ? true : false
     }
 
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -35,9 +34,11 @@ class SignUp extends React.Component {
         email: this.state.email,
         password: this.state.password
       }).then(res => {
-        console.log(res);
-        toast.success('Register Successful');
+        this.setState({
+          redirect: true
+        });
       }).catch(err => {
+        toast.error(`Mail exists`);
         console.log(err);
       });
     } else {
@@ -49,35 +50,32 @@ class SignUp extends React.Component {
     this.setState({
       firstName: event.target.value
     });
-    this.firstNameInputChangeHandler = "";
   }
 
   lastNameInputChangeHandler(event) {
     this.setState({
       lastName: event.target.value
     });
-    this.lastNameInputChangeHandler = "";
   }
 
   emailInputChangeHandler(event) {
     this.setState({
       email: event.target.value
     });
-    this.emailInputChangeHandler = "";
   }
 
   passwordInputChangeHandler(event) {
     this.setState({
       password: event.target.value
     });
-    this.passwordInputChangeHandler = "";
   }
 
   render() {
+    if (this.state.redirect) return <Redirect to='/' />
     return (
       <Form onSubmit={this.onSubmitHandler.bind(this)}>
-        <ToastContainer />
         <h3 className="text-center text-info">Register</h3>
+        <ToastContainer />
         <div className="form-group">
           <label htmlFor="first-name" className="text-info">First Name:</label><br />
           <input
@@ -131,4 +129,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+export default SignIn;

@@ -1,5 +1,5 @@
 const config = {
-    secret: '',
+    secret: 'my_secret_key',
     port: 5000
 }
 

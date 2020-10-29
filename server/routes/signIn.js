@@ -27,11 +27,9 @@ router.post('/', (req, res, next) => {
                         firstName: user[0].firstName,
                         lastName: user[0].lastName,
                         email: user[0].email,
-                    },
-                        'my_secret_key',
-                        {
-                            expiresIn: "1h"
-                        });
+                    }, 'my_secret_key', {
+                        expiresIn: "1h"
+                    });
                     return res.status(200).json({
                         message: 'Auth successful',
                         token: token
